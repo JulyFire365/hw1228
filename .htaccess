@@ -1,0 +1,5 @@
+# nginx rewrite rule
+
+rewrite ^/admin$ /index.php;
+
+# end nginx rewrite rule
