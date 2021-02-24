@@ -1,12 +1,32 @@
+const CompressionPlugin = require('compression-webpack-plugin')
+
 module.exports = {
 	devServer: {
 		proxy: 'http://www.hw.com'
 	},
-	
+
+	chainWebpack: config => {
+        config.resolve.symlinks(true)
+    },
+    
 	outputDir: '../public',
 	
 	indexPath: process.env.NODE_ENV === 'production' ? '../views/index.php' : 'index.html',
 	
+    configureWebpack: config => {
+        if (process.env.NODE_ENV === 'production') {
+            return {
+                plugins: [
+                    new CompressionPlugin({
+                        test: /\.js$|\.html$|\.css/,
+                        threshold: 10240,
+                        deleteOriginalAssets: false
+                    })
+                ]
+            }
+        }
+    },
+    
 	css: {
         extract: true, // 是否使用css分离插件 ExtractTextPlugin
         sourceMap: false, // 开启 CSS source maps?
