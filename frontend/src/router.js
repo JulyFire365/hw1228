@@ -17,8 +17,15 @@ const newRouter = new Router({
     {
         path: "/home",
         name: "home",
-        components: require("./components/adminHome.vue")
-    },
+        components: require("./components/adminHome.vue"),
+        children: [
+            {
+                path: "upload",
+                name: "upload",
+                components: require("./components/upload.vue")
+            }
+        ]
+    }
     ]
 });
 

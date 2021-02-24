@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import {login} from '@/request'
 export default {
   name: 'login',
   data(){
@@ -38,9 +39,11 @@ export default {
 	submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-			  this.axios.post('/index.php?controller=admin&method=login',this.ruleForm)
+			  login(this.ruleForm)
 			  .then(res=>{
-				  console.log(res);
+				if(res.status == 200){
+					this.$router.push('/home/upload');
+				}
 			  })
           } else {
             console.log('error submit!!');

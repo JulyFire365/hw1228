@@ -31,3 +31,24 @@
         }
         return $newarr;
     }
+
+    function  create_folders( $dir ) {
+        return  is_dir ( $dir )  or  (create_folders(dirname( $dir ))  and  mkdir ( $dir , 0777));
+    }
+
+    function unpack_file($file,$targetName = 'img/默认相册'){
+        switch ($file['type'])
+        {
+        case 'application/x-gzip'://.gz
+        exec("gunzip ./".$targetName.$file['name']);
+        break;  
+        case 'application/x-tar': //.tar
+        exec("tar -xvf ./".$targetName.$file['name'] ." -C ./".$targetNam);
+        break;
+        case 'application/octet-stream'://.rar
+        exec("unrar e ./".$targetName.$file['name']);
+        break;
+        default://.zip
+            exec("unzip ./".$targetName.$file['name'] .' -d ./'.$targetName);
+        }
+    }

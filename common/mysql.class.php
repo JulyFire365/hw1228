@@ -10,8 +10,11 @@
     }
 
     function findOne($result){
-        $rs = mysqli_fetch_assoc($result);
-        return $rs;
+        if($result){
+            $rs = mysqli_fetch_assoc($result);
+            return $rs;
+        }
+        return false;
     }
 
     function findAll($result){
@@ -29,7 +32,7 @@
         $keys = implode(",",$keyArr);
         $values = implode(",",$valueArr);
         $sql = "insert into ".$table." (".$keys.") values(".$values.")";
-
+        var_dump($sql);
         mysqli_query($con,$sql);
     }
 
