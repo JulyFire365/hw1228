@@ -4,3 +4,4 @@
     require_once('./config.php');
     require_once('./framework/main.php');
     MAIN::run($config);
+    require_once('./views/index.php');

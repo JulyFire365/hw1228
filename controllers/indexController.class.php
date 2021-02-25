@@ -3,6 +3,6 @@
     class indexController{
         public function index(){
 
-            print_r("index controller");
+            // print_r("index controller");
         }
     }
