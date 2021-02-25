@@ -15,4 +15,19 @@ class adminController extends Base{
             }
         }
     }
+    public function isLogin(){
+        $model = M('auth');
+        $auth = $model->getAuth();
+        if($auth){
+            $this->ajaxInfo(['name'=>$auth['name']],'',STATUS_SUCCESS);
+        }else{
+            $this->ajaxInfo([],'未登录',STATUS_ERROR);
+        }
+    }
+
+    public function logout(){
+        $model = M('auth');
+        $model->logout();
+        $this->ajaxInfo([],'',STATUS_SUCCESS);
+    }
 }

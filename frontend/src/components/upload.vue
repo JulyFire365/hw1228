@@ -1,5 +1,6 @@
 <template>
     <div class="upload">
+        <div class="part-left">
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="200px" class="demo-ruleForm">
         <el-form-item label="图片集名称：" prop="folderId">
         <el-select
@@ -30,6 +31,7 @@
                 :on-exceed="handleExceed"
                 :before-upload="handleBeforeUpload"
                 :on-success="handleOnSuccess"
+                :on-change="changeFn"
                 :on-progress="handleOnProgress">
                 <i class="el-icon-upload"></i>
                 <div class="el-upload__text">
@@ -39,9 +41,18 @@
                     </div>
                 </div>
             </el-upload> 
+            <p style="color:red;">* 文件名称请勿包含特殊字符或中文,压缩包仅解压一级目录</p>
             </div>
          </el-form-item>
         </el-form>
+        </div>
+        <ul class="part-right" v-if="errArr.length">
+            <li>错误提示：</li>
+            <li v-for="(item,index) in errArr" :key="index">
+                <!-- <span>{{item.name}}</span>  -->
+                {{item.msg}}
+            </li>
+        </ul>
     </div>
 </template>
 <script>
@@ -52,6 +63,7 @@ export default {
         return {
             staticData: [],
             limitNum: 20,
+            errArr:[],
             ruleForm: {
                 folderId: ''
             },
@@ -66,13 +78,29 @@ export default {
         this.initData();
     },
     methods:{
+        changeFn(file, fileList){
+            // console.log(file);
+            // console.log(fileList);
+            if(file.response && file.response.status == 201){
+                let _file = {
+                    name: file.name,
+                    msg: file.response.msg
+                }
+                this.errArr.unshift(_file);
+                console.log(this.errArr)
+            }
+        },
         handleOnSuccess(res, file, fileList) {
             console.log("success");
             this.detailSuccess(res,file)
         },
         detailSuccess(){},
         handleOnProgress(event, file, fileList) {
-
+            // console.log(file.response);
+            // if(file.response && file.response.status == 201){
+            //     this.errArr.unshift(file.response.msg);
+            //     console.log(this.errArr)
+            // }
         },
         handleClickUpload(formName){
             this.$refs[formName].validate((valid) => {});
@@ -114,7 +142,7 @@ export default {
 
             if (!isLt100M) {
                 this.$message({
-                    message: `${file.name} 文件超过 50M, 上传失败!`,
+                    message: `${file.name} 文件超过 100M, 上传失败!`,
                     type: 'error'
                 })
                 return false;
@@ -144,10 +172,33 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+@warnColor:red;
 .upload{
-    width: 600px;
-    margin: 60px 0 0 200px
+    clear: both;
+    overflow: hidden;
 }
+.part-left{
+    width: 570px;
+    margin: 60px 0 0 150px;
+    float: left;
+}
+.part-right{
+    width: 300px;
+    margin-left: 100px;
+    margin-top: 140px;
+    float: left;
+    span {
+        display: inline-block;
+        margin-right: 20px;
+    }
+    li {
+        color: @warnColor;
+        padding: 4px 0;
+        margin: 10px 0;
+        border-bottom: 1px solid @warnColor;
+    }
+}
+
 /deep/ .el-upload-dragger{
     height: auto;
 }

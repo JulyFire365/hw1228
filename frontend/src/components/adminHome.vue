@@ -1,6 +1,7 @@
 <template>
     <div class="home">
     <div class="nav">
+        <p class="user">Hello, {{name}}.</p>
         <el-menu
             default-active="1"
             class="el-menu-vertical-demo"
@@ -11,9 +12,11 @@
                 <span slot="title"><router-link :to="{path:'/home/upload'}"><i class="el-icon-menu"></i>图片上传</router-link></span>
             </el-menu-item>
             <el-menu-item index="2">
-                <span slot="title"> <router-link :to="{path:'/home'}"><i class="el-icon-document"></i>图片列表</router-link></span>
+                <span slot="title"> <router-link :to="{path:'/home/imgList'}"><i class="el-icon-document"></i>图片列表</router-link></span>
             </el-menu-item>
         </el-menu>
+
+        <p @click="logoutFn" class="logout">退出登录</p>
     </div>
     <div class="content">
         <div class="wrap">
@@ -23,24 +26,40 @@
     </div>
 </template>
 <script>
+import {isLogin,logout} from '@/request'
 export default {
     name: 'home',
     data(){
         return {
-
+            name: ''
         }
     },
     created(){
-        this.isLogin();
+        this.loginStatus();
     },
     methods: {
-        isLogin(){}
+        loginStatus(){
+            isLogin().then(res=>{
+                if(res.status == 200){
+                    this.name = res.data.name
+                }else{
+                    this.$router.push('/admin');
+                }
+            })
+        },
+        logoutFn(){
+            logout().then(res=>{
+                if(res.status == 200){
+                    this.$router.push('/admin');
+                }
+            })
+        }
     }
 }
 </script>
 <style lang="less" scoped>
 .nav{
-    width: 10%;
+    width: 8%;
     min-width: 160px;
     height: 100%;
     position: fixed;
@@ -57,12 +76,28 @@ export default {
         padding: 0;
     }
 }
+.user{
+    position: absolute;
+    top: 0;
+    left: 0;
+    text-align: center;
+    color: #fff;
+    width: 100%;
+    padding-top: 20px;
+}
+.logout{
+    text-align: center;
+    margin-top: 100px;
+    color: #fff;
+    text-decoration: underline;
+    cursor: pointer;
+}
 a{color:#fff;text-decoration: none;}
 a.router-link-exact-active.router-link-active{color: #ffd04b;}
 .content{
     width: 100%;
     box-sizing: border-box;
-    padding-left: 12%;
+    padding-left: 10%;
     padding-top: 30px;
     background: #f5f5f5;
     height: 100vh;

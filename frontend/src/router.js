@@ -23,6 +23,11 @@ const newRouter = new Router({
                 path: "upload",
                 name: "upload",
                 components: require("./components/upload.vue")
+            },
+            {
+                path: "imgList",
+                name: "imgList",
+                components: require("./components/imgList.vue")
             }
         ]
     }

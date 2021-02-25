@@ -16,10 +16,13 @@ class folderController extends Base{
 
     public function tempDir(){
         $folderId = $_POST['folderId'];
+
         $folder = M('folder');
-        $data = $folder->findFolderName($folderId);
-        $fileName = $data ? $data['name_ch'] : $folderId;
-        if(!$data){
+        $dataId = $folder->findFolderId($folderId);
+        $dataName = $folder->findFolderName($folderId);
+
+        $fileName = $dataId ? $dataId['name_ch'] : $folderId;
+        if(!$dataId && !$dataName){
             $folder->insertFolderName($folderId);
         }
         // var_dump($data);
@@ -52,5 +55,33 @@ class folderController extends Base{
             $info = "无效文件或不符合格式/大小要求";
         }
         $this->ajaxInfo([],$info,STATUS_ERROR);
+    }
+
+    public function getAllFile(){
+        //获取当前文件所在的绝对目录
+        $dir =  dirname(__FILE__);
+        //扫描文件夹
+        $file = scandir($dir.'/../img');
+        //显示
+        $fileArr = [];
+        $acceptType = ['jpg','jpeg','png','gif'];
+        $foldArr = array_slice($file,2);
+        foreach($foldArr as $key=>$value){
+            $newFile = scandir($dir.'/../img/'.$value);
+            $type = substr(strrchr($newFile[2], '.'), 1);
+            if(in_array($type,$acceptType)){
+                $fileArr[$value] = $newFile[2];
+            }else{
+                $fileArr[$value] = "special_handle";
+            }
+        }
+        $data = [];
+        foreach($fileArr as $key=>$value){
+            $obj = [];
+            $obj['name'] = $key;
+            $obj['link'] = $value == 'special_handle' ? '/img/默认相册/test.jpg' : '/img/'.$key.'/'.$value;
+            $data[] = arr2obj($obj);
+        }
+        $this->ajaxInfo($data,'',STATUS_SUCCESS);
     }
 }

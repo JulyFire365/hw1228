@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Message, Loading } from "element-ui";
 axios.defaults.withcredentials = true;
-axios.defaults.headers.common["Content-Type"] = "application/json;charset=UTF-8";
+// axios.defaults.headers.common["Content-Type"] = "application/json;charset=UTF-8";
 axios.defaults.baseURL = "";
 
 // loading框设置局部刷新，且所有请求完成后关闭loading框
@@ -38,25 +38,26 @@ axios.interceptors.response.use(
         if (!loadCount) {
             loadingArray.forEach(item => item.close());
         }
+        console.log(response);
         if (response.status && response.status == 200) {
             if (response.data.status == 200) {
                 return response.data;
             } else if (response.data.status === 201) {
-                setTimeout(() => {
-                    sessionStorage.removeItem('expires_status');
-                }, 5000)
-                if (!sessionStorage.getItem("expires_status")) {
-                    sessionStorage.setItem("expires_status", 1);
+                // setTimeout(() => {
+                //     sessionStorage.removeItem('expires_status');
+                // }, 5000)
+                // if (!sessionStorage.getItem("expires_status")) {
+                //     sessionStorage.setItem("expires_status", 1);
                     Message.error({ message: response.data.msg });
-                }
+                // }
             } else if (response.data.status === 202) {
-                if (!sessionStorage.getItem("expires_status1")) {
-                    sessionStorage.setItem("expires_status1", 1);
+                // if (!sessionStorage.getItem("expires_status1")) {
+                //     sessionStorage.setItem("expires_status1", 1);
                     Message.error({ message: response.data.msg });
-                }
+                // }
             } else {
                 // 错误提示
-                if (!(response.data.data && response.data.data.captcha_img)) {
+                if (!response.data.data) {
                     return Promise.reject(response.data);
                 }
                 return response.data;
