@@ -1,8 +1,12 @@
+require('dotenv').config({
+    path: '../.env'
+})
 const CompressionPlugin = require('compression-webpack-plugin')
-
+const hostUrl = process.env.APP_URL
+console.log(hostUrl);
 module.exports = {
 	devServer: {
-		proxy: 'http://www.hw.com'
+		proxy: hostUrl
 	},
 
 	chainWebpack: config => {
@@ -26,7 +30,7 @@ module.exports = {
             }
         }
     },
-    
+
 	css: {
         extract: true, // 是否使用css分离插件 ExtractTextPlugin
         sourceMap: false, // 开启 CSS source maps?
