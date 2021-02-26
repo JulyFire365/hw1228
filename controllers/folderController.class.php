@@ -3,7 +3,7 @@
 // include_once($curdir.'/../common/base.php');
 
 class folderController extends Base{
-    // public $fileArr = [];
+    public static $acceptType = ['jpg','jpeg','png','gif'];
     public function getList(){
         $folder = M('folder');
         $data = $folder->initFolderList();
@@ -64,24 +64,59 @@ class folderController extends Base{
         $file = scandir($dir.'/../img');
         //显示
         $fileArr = [];
-        $acceptType = ['jpg','jpeg','png','gif'];
         $foldArr = array_slice($file,2);
         foreach($foldArr as $key=>$value){
             $newFile = scandir($dir.'/../img/'.$value);
             $type = substr(strrchr($newFile[2], '.'), 1);
-            if(in_array($type,$acceptType)){
+            if(in_array($type,self::$acceptType)){
                 $fileArr[$value] = $newFile[2];
             }else{
                 $fileArr[$value] = "special_handle";
             }
         }
         $data = [];
+        $folder = M('folder');
+        $dataStatic = $folder->initFolderList();
+        $dataArr = [];
+        foreach($dataStatic as $key=>$value){
+            $dataArr[] = [$value['name_ch'] => $value[id]];
+        }
+        $i = 0;
         foreach($fileArr as $key=>$value){
             $obj = [];
+            foreach($dataStatic as $key1=>$value1){
+                if($value1['name_ch'] == $key){
+                    $obj['id'] = $value1['id'];
+                }
+            }
+            $i++;
             $obj['name'] = $key;
             $obj['link'] = $value == 'special_handle' ? '/img/默认相册/test.jpg' : '/img/'.$key.'/'.$value;
             $data[] = arr2obj($obj);
         }
         $this->ajaxInfo($data,'',STATUS_SUCCESS);
+    }
+
+    public function getAllImg(){
+        $id = $_GET['id'];
+        $folder = M('folder');
+        $dataName = $folder->findFolderId($id);
+ 
+        $imgArr = [];
+        $dir =  dirname(__FILE__);
+        $data = [];
+        if($dataName['name_ch']){
+            $imgArr = scandir($dir.'/../img/'.$dataName['name_ch']);
+            if(count($imgArr) > 2){
+                $imgArr = array_slice($imgArr,2);
+                foreach($imgArr as $key=>$value){
+                    $type = substr(strrchr($value, '.'), 1);
+                    if(in_array($type,self::$acceptType)){
+                        $data[] = '/img/'.$dataName['name_ch'].'/'.$value;
+                    }
+                }
+            }
+        }
+        $this->ajaxInfo($data,'',STATUS_SUCCESS); 
     }
 }

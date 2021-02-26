@@ -28,6 +28,11 @@ const newRouter = new Router({
                 path: "imgList",
                 name: "imgList",
                 components: require("./components/imgList.vue")
+            },
+            {
+                path: "img",
+                name: "img",
+                components: require("./components/img.vue")
             }
         ]
     }

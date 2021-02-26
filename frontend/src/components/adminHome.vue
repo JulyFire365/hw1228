@@ -12,7 +12,7 @@
                 <span slot="title"><router-link :to="{path:'/home/upload'}"><i class="el-icon-menu"></i>图片上传</router-link></span>
             </el-menu-item>
             <el-menu-item index="2">
-                <span slot="title"> <router-link :to="{path:'/home/imgList'}"><i class="el-icon-document"></i>图片列表</router-link></span>
+                <span slot="title"> <router-link :to="{path:'/home/imgList'}"><i class="el-icon-document"></i>相册列表</router-link></span>
             </el-menu-item>
         </el-menu>
 

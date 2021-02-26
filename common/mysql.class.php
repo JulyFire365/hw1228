@@ -32,7 +32,6 @@
         $keys = implode(",",$keyArr);
         $values = implode(",",$valueArr);
         $sql = "insert into ".$table." (".$keys.") values(".$values.")";
-        var_dump($sql);
         mysqli_query($con,$sql);
     }
 
@@ -43,7 +42,6 @@
         }
         $keyAndValueArr = implode(",",$keyAndValueArr);
         $sql = "update ".$table." set ".$keyAndValueArr." where ".$where."";
-        echo $sql;
         mysqli_query($con,$sql);
     }
 

@@ -2,13 +2,13 @@
     <div class="upload">
         <div class="part-left">
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="200px" class="demo-ruleForm">
-        <el-form-item label="图片集名称：" prop="folderId">
+        <el-form-item label="相册名称：" prop="folderId">
         <el-select
             v-model="ruleForm.folderId"
             filterable
             allow-create
             default-first-option
-            placeholder="请选择或创建文件夹">
+            placeholder="请选择或创建相册">
             <el-option
             v-for="item in staticData"
             :key="item.id"

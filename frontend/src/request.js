@@ -21,3 +21,7 @@ export const uploadStatic = () => {
 export const getAllFile = () => {
     return api.get(`/index.php?controller=folder&method=getAllFile`);
 };
+
+export const getAllImg = param => {
+    return api.get(`/index.php?controller=folder&method=getAllImg`,param);
+};
