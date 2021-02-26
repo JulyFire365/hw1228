@@ -26,8 +26,8 @@ export default {
         return {
             dialogVisible: false,
             name: '',
-            imgArr: [],
-            imgCur: ''
+            imgCur: '',
+            imgArr: []
         }
     },
     created(){

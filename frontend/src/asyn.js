@@ -1,7 +1,6 @@
 import axios from "axios";
 import { Message, Loading } from "element-ui";
 axios.defaults.withcredentials = true;
-// axios.defaults.headers.common["Content-Type"] = "application/json;charset=UTF-8";
 axios.defaults.baseURL = "";
 
 // loading框设置局部刷新，且所有请求完成后关闭loading框
@@ -38,7 +37,6 @@ axios.interceptors.response.use(
         if (!loadCount) {
             loadingArray.forEach(item => item.close());
         }
-        console.log(response);
         if (response.status && response.status == 200) {
             if (response.data.status == 200) {
                 return response.data;
@@ -51,10 +49,8 @@ axios.interceptors.response.use(
                     Message.error({ message: response.data.msg });
                 // }
             } else if (response.data.status === 202) {
-                // if (!sessionStorage.getItem("expires_status1")) {
-                //     sessionStorage.setItem("expires_status1", 1);
                     Message.error({ message: response.data.msg });
-                // }
+                    location.href = '/admin'
             } else {
                 // 错误提示
                 if (!response.data.data) {

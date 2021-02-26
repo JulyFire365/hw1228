@@ -21,7 +21,7 @@ class adminController extends Base{
         if($auth){
             $this->ajaxInfo(['name'=>$auth['name']],'',STATUS_SUCCESS);
         }else{
-            $this->ajaxInfo([],'未登录',STATUS_ERROR);
+            $this->ajaxInfo([],'未登录',STATUS_LOGIN_ERROR);
         }
     }
 
