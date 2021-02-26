@@ -5,7 +5,7 @@
             <div class="wrap" @click="viewPic(item)">
                 <img :src="item" alt="">
             </div>
-            <p>{{item.split('/')[item.split('/').length-1]}}</p>
+            <p class="txt">{{item.split('/')[item.split('/').length-1]}}</p>
         </li>
     </ul>
     <div class="empty" v-else>相册暂无图片</div>
@@ -16,11 +16,7 @@
     :visible.sync="dialogVisible"
     width="40%">
     <img :src="imgCur" alt="">
-    <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-    </span>
     </el-dialog>
-
 </div>
 </template>
 <script>
@@ -54,6 +50,13 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+.txt {
+    width: 100%;
+    text-align: center;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+}
 .pop{
     text-align:center;
     img {
