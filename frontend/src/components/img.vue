@@ -12,9 +12,9 @@
 
     <el-dialog
     title="大图"
-    style="text-align:center;"
+    class="pop"
     :visible.sync="dialogVisible"
-    width="30%">
+    width="40%">
     <img :src="imgCur" alt="">
     <span slot="footer" class="dialog-footer">
         <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
@@ -54,6 +54,12 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+.pop{
+    text-align:center;
+    img {
+        max-width: 90%;
+    }
+}
 .dialog-footer{
     text-align: center;
     display: block;
