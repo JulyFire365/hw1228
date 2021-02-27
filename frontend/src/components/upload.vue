@@ -1,7 +1,7 @@
 <template>
     <div class="upload">
         <div class="part-left">
-        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="200px" class="demo-ruleForm">
+        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0" class="demo-ruleForm">
         <el-form-item label="相册名称：" prop="folderId">
         <el-select
             v-model="ruleForm.folderId"
@@ -212,8 +212,17 @@ export default {
         border-bottom: 1px solid @warnColor;
     }
 }
-
 /deep/ .el-upload-dragger{
     height: auto;
+}
+@media (max-width: 750px) {    
+    .part-left{
+        width: 100%;
+        margin: 60px auto 0;
+        float: none;
+    }
+    /deep/ .el-form-item__label{
+        display: none;
+    }
 }
 </style>

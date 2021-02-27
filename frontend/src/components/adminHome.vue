@@ -112,4 +112,39 @@ a.router-link-exact-active.router-link-active{color: #ffd04b;}
 /deep/ .el-menu{
     border-right: none;
 }
+@media (max-width:750px) {
+    .nav{
+        width: 100%;
+        top: 0;
+        height: 60px;
+        padding-top: 0;
+    }
+    .user{
+        display: none;
+    }
+    /deep/ .el-menu{
+        width: 80%;
+        float: left;
+        li {
+            width: 40%;
+            float: left;
+        }
+    }
+    .logout{
+        width: 20%;
+        float: right;
+        margin-top: 24px;
+        font-size: 100%;
+        font: inherit;
+    }
+    .content {
+        padding-left: 0;
+        padding-top: 0;
+        .wrap {
+            width: 100%;
+            height: 100vh;
+            padding: 20px;
+        }
+    }
+}
 </style>

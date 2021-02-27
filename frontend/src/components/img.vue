@@ -13,8 +13,8 @@
     <el-dialog
     title="大图"
     class="pop"
-    :visible.sync="dialogVisible"
-    width="40%">
+    width="40%"
+    :visible.sync="dialogVisible">
     <img :src="imgCur" alt="">
     </el-dialog>
 </div>
@@ -59,6 +59,7 @@ export default {
 }
 .pop{
     text-align:center;
+    
     img {
         max-width: 90%;
     }
@@ -103,5 +104,17 @@ li{
     width: 100%;
     text-align: center;
     margin: 200px 0;
+}
+/deep/ .el-dialog {
+    width: 100%!important;
+}
+@media (max-width: 750px) {
+    ul {
+        margin-top: 50px;
+    }
+    li {width: 46%;margin: 20px 2%;}
+    .pop{
+        width: 100%;
+    }
 }
 </style>

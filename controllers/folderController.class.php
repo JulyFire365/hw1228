@@ -15,12 +15,11 @@ class folderController extends Base{
     }
 
     public function foldRecordInDb(){
-        $folderId = $_POST['folderId'];
+        $folderId = $_GET['id'];
         $folder = M('folder');
         $dataId = $folder->findFolderName($folderId);
 
         !$dataId && $folder->insertFolderName($folderId);
-
         $this->ajaxInfo([],'',STATUS_SUCCESS);
     }
 

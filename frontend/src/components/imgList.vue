@@ -76,4 +76,15 @@ li {
         opacity: .5;
     }
 }
+
+@media (max-width:750px) {
+    li{
+        margin: 2%;
+        width: 46%;
+    }
+    ul {
+        position: relative;
+        top: 40px;
+    }
+}
 </style>
