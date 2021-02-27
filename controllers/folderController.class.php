@@ -14,22 +14,28 @@ class folderController extends Base{
         $this->ajaxInfo($newData,'',STATUS_SUCCESS);
     }
 
+    public function foldRecordInDb(){
+        $folderId = $_POST['folderId'];
+        $folder = M('folder');
+        $dataId = $folder->findFolderName($folderId);
+
+        !$dataId && $folder->insertFolderName($folderId);
+
+        $this->ajaxInfo([],'',STATUS_SUCCESS);
+    }
+
     public function tempDir(){
         $folderId = $_POST['folderId'];
 
         $folder = M('folder');
         $dataId = $folder->findFolderId($folderId);
-        $dataName = $folder->findFolderName($folderId);
-
+        
         $fileName = $dataId ? $dataId['name_ch'] : $folderId;
-        if(!$dataId && !$dataName){
-            $folder->insertFolderName($folderId);
-        }
-        // var_dump($data);
+
         $accept = ['application/x-gzip','application/x-tar','application/octet-stream','application/x-zip-compressed','image/x-png','image/png','image/jpg','image/jpeg','image/pjpeg','image/gif'];
         $packArr = array_slice($accept,0,4);
  
-        $type = $_FILES['file']['type'];
+        $type = strtolower($_FILES['file']['type']);
         $size = $_FILES['file']['size'];
         $info = "";
         if(in_array($type,$accept) && $size <= 104857600){
@@ -68,6 +74,7 @@ class folderController extends Base{
         foreach($foldArr as $key=>$value){
             $newFile = scandir($dir.'/../img/'.$value);
             $type = substr(strrchr($newFile[2], '.'), 1);
+            $type = strtolower($type);
             if(in_array($type,self::$acceptType)){
                 $fileArr[$value] = $newFile[2];
             }else{
@@ -111,6 +118,7 @@ class folderController extends Base{
                 $imgArr = array_slice($imgArr,2);
                 foreach($imgArr as $key=>$value){
                     $type = substr(strrchr($value, '.'), 1);
+                    $type = strtolower($type);
                     if(in_array($type,self::$acceptType)){
                         $data[] = '/img/'.$dataName['name_ch'].'/'.$value;
                     }

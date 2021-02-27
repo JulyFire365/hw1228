@@ -56,7 +56,7 @@
     </div>
 </template>
 <script>
-import {uploadStatic} from '@/request'
+import {uploadStatic,foldRecordInDb} from '@/request'
 export default {
     name: 'upload',
     data(){
@@ -81,20 +81,34 @@ export default {
         changeFn(file, fileList){
             // console.log(file);
             // console.log(fileList);
-            if(file.response && file.response.status == 201){
-                let _file = {
-                    name: file.name,
-                    msg: file.response.msg
+            if(file.response){
+                if(file.response.status == 201){
+
+                    let _file = {
+                            name: file.name,
+                        msg: file.response.msg
+                    }
+                    this.errArr.unshift(_file);
+                    console.log(this.errArr)
                 }
-                this.errArr.unshift(_file);
-                console.log(this.errArr)
+                if(file.response.status == 200){
+                    let _flag = true;
+                    // this.ruleForm.folderId
+                    this.staticData.forEach(item=>{
+                        if(item.name_ch == this.ruleForm.folderId || item.id == this.ruleForm.folderId){
+                            _flag = false;
+                        }
+                    })
+                    _flag && foldRecordInDb({id: this.ruleForm.folderId})
+                }
             }
+
         },
         handleOnSuccess(res, file, fileList) {
-            console.log("success");
-            this.detailSuccess(res,file)
+            // console.log("success");
+            // this.detailSuccess(res,file);
         },
-        detailSuccess(){},
+        // detailSuccess(){},
         handleOnProgress(event, file, fileList) {
             // console.log(file.response);
             // if(file.response && file.response.status == 201){

@@ -25,3 +25,9 @@ export const getAllFile = () => {
 export const getAllImg = param => {
     return api.get(`/index.php?controller=folder&method=getAllImg`,param);
 };
+
+//把新建相册名称存储到数据库
+export const foldRecordInDb = param => {
+    return api.get(`/index.php?controller=folder&method=foldRecordInDb`,param);
+};
+
