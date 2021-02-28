@@ -61,7 +61,7 @@ export default {
                             }
                         })
                 } else {
-                    console.log('error submit!!');
+                    // console.log('error submit!!');
                     return false;
                 }
             });
@@ -97,7 +97,7 @@ export default {
 }
 .wrap {
     height: 100vh;
-    background: url("../imgs/bg_5.jpg");
+    background: url(../pic/bg_5.jpg?1);
 }
 @media (max-width: 750px) {
     .login-wrap {
