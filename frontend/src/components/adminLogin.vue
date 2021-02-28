@@ -97,7 +97,7 @@ export default {
 }
 .wrap {
     height: 100vh;
-    background: url(../pic/bg_5.jpg?1);
+    background: url(./../pic/bg_5.jpg?1);
 }
 @media (max-width: 750px) {
     .login-wrap {

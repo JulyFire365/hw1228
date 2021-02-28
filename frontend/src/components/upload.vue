@@ -233,5 +233,8 @@ export default {
         display: none;
         width: 0px !important;
     }
+    /depp/ .el-form-item__content {
+        margin-left: 0px !important;
+    }
 }
 </style>
