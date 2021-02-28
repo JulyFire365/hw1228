@@ -1,54 +1,62 @@
 <template>
     <div class="upload">
         <div class="part-left">
-        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0" class="demo-ruleForm">
-        <el-form-item label="相册名称：" prop="folderId">
-        <el-select
-            v-model="ruleForm.folderId"
-            filterable
-            allow-create
-            default-first-option
-            placeholder="请选择或创建相册">
-            <el-option
-            v-for="item in staticData"
-            :key="item.id"
-            :label="item.name_ch"
-            :value="item.id">
-            </el-option>
-        </el-select>
-        </el-form-item>
-         <el-form-item label="" prop="" style="margin-top: 50px;">
-            <div draggable="true" @click="handleClickUpload('ruleForm')" @dragenter.prevent="handleClickUpload('ruleForm')">
-            <el-upload
-                class="upload-demo"
-                drag
-                action="/index.php?controller=folder&method=tempDir"
-                accept="image/jpeg,image/jpg,image/gif,image/png,.zip,.rar,.tar,.gz"
-                multiple
-                :data="ruleForm"
-                :disabled="!(ruleForm.folderId != '')"
-                :limit="limitNum"
-                :on-exceed="handleExceed"
-                :before-upload="handleBeforeUpload"
-                :on-success="handleOnSuccess"
-                :on-change="changeFn"
-                :on-progress="handleOnProgress">
-                <i class="el-icon-upload"></i>
-                <div class="el-upload__text">
-                    <p>将文件拖到此处，或<em>点击上传</em></p>
-                    <div style="padding:0 10px 20px; line-height: 26px;">支持扩展名：<strong style="font-weight:bold;">.jpg .png .gif .zip .rar .tar .gz </strong> 
-                    单个文件不超过100M, 一次至多上传20个源文件, 封面图默认第一个图片文件
+            <el-form :model="ruleForm"
+                     :rules="rules"
+                     ref="ruleForm"
+                     label-width="200px"
+                     class="demo-ruleForm">
+                <el-form-item label="相册名称："
+                              prop="folderId">
+                    <el-select v-model="ruleForm.folderId"
+                               filterable
+                               allow-create
+                               default-first-option
+                               placeholder="请选择或创建相册">
+                        <el-option v-for="item in staticData"
+                                   :key="item.id"
+                                   :label="item.name_ch"
+                                   :value="item.id">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label=""
+                              prop=""
+                              style="margin-top: 50px;">
+                    <div draggable="true"
+                         @click="handleClickUpload('ruleForm')"
+                         @dragenter.prevent="handleClickUpload('ruleForm')">
+                        <el-upload class="upload-demo"
+                                   drag
+                                   action="/index.php?controller=folder&method=tempDir"
+                                   accept="image/jpeg,image/jpg,image/gif,image/png,.zip,.rar,.tar,.gz"
+                                   multiple
+                                   :data="ruleForm"
+                                   :disabled="!(ruleForm.folderId != '')"
+                                   :limit="limitNum"
+                                   :on-exceed="handleExceed"
+                                   :before-upload="handleBeforeUpload"
+                                   :on-success="handleOnSuccess"
+                                   :on-change="changeFn"
+                                   :on-progress="handleOnProgress">
+                            <i class="el-icon-upload"></i>
+                            <div class="el-upload__text">
+                                <p>将文件拖到此处，或<em>点击上传</em></p>
+                                <div style="padding:0 10px 20px; line-height: 26px;">支持扩展名：<strong style="font-weight:bold;">.jpg .png .gif .zip .rar .tar .gz </strong>
+                                    单个文件不超过100M, 一次至多上传20个源文件, 封面图默认第一个图片文件
+                                </div>
+                            </div>
+                        </el-upload>
+                        <p style="color:red;">* 文件名称请勿包含特殊字符或中文,压缩包仅解压一级目录</p>
                     </div>
-                </div>
-            </el-upload> 
-            <p style="color:red;">* 文件名称请勿包含特殊字符或中文,压缩包仅解压一级目录</p>
-            </div>
-         </el-form-item>
-        </el-form>
+                </el-form-item>
+            </el-form>
         </div>
-        <ul class="part-right" v-if="errArr.length">
+        <ul class="part-right"
+            v-if="errArr.length">
             <li>错误提示：</li>
-            <li v-for="(item,index) in errArr" :key="index">
+            <li v-for="(item,index) in errArr"
+                :key="index">
                 <!-- <span>{{item.name}}</span>  -->
                 {{item.msg}}
             </li>
@@ -56,14 +64,14 @@
     </div>
 </template>
 <script>
-import {uploadStatic,foldRecordInDb} from '@/request'
+import { uploadStatic, foldRecordInDb } from '@/request'
 export default {
     name: 'upload',
-    data(){
+    data () {
         return {
             staticData: [],
             limitNum: 20,
-            errArr:[],
+            errArr: [],
             ruleForm: {
                 folderId: ''
             },
@@ -74,58 +82,58 @@ export default {
             }
         }
     },
-    created(){
+    created () {
         this.initData();
     },
-    methods:{
-        changeFn(file, fileList){
+    methods: {
+        changeFn (file, fileList) {
             // console.log(file);
             // console.log(fileList);
-            if(file.response){
-                if(file.response.status == 201){
+            if (file.response) {
+                if (file.response.status == 201) {
 
                     let _file = {
-                            name: file.name,
+                        name: file.name,
                         msg: file.response.msg
                     }
                     this.errArr.unshift(_file);
                     console.log(this.errArr)
                 }
-                if(file.response.status == 200){
+                if (file.response.status == 200) {
                     let _flag = true;
                     // this.ruleForm.folderId
-                    this.staticData.forEach(item=>{
-                        if(item.name_ch == this.ruleForm.folderId || item.id == this.ruleForm.folderId){
+                    this.staticData.forEach(item => {
+                        if (item.name_ch == this.ruleForm.folderId || item.id == this.ruleForm.folderId) {
                             _flag = false;
                         }
                     })
-                    _flag && foldRecordInDb({id: this.ruleForm.folderId})
+                    _flag && foldRecordInDb({ id: this.ruleForm.folderId })
                 }
             }
 
         },
-        handleOnSuccess(res, file, fileList) {
+        handleOnSuccess (res, file, fileList) {
             // console.log("success");
             // this.detailSuccess(res,file);
         },
         // detailSuccess(){},
-        handleOnProgress(event, file, fileList) {
+        handleOnProgress (event, file, fileList) {
             // console.log(file.response);
             // if(file.response && file.response.status == 201){
             //     this.errArr.unshift(file.response.msg);
             //     console.log(this.errArr)
             // }
         },
-        handleClickUpload(formName){
-            this.$refs[formName].validate((valid) => {});
+        handleClickUpload (formName) {
+            this.$refs[formName].validate((valid) => { });
         },
-        handleBeforeUpload(file){
-            const isLt100M = file.size / 1024 / 1024  < 100
+        handleBeforeUpload (file) {
+            const isLt100M = file.size / 1024 / 1024 < 100
             const chineseReg = /[\u4E00-\u9fff]+/g
             const isChineseName = chineseReg.test(file.name)
 
             // 检查相同文件名
-            function checkSameName(arr) {
+            function checkSameName (arr) {
                 let _name = file.name
                 let _tag = 0
                 if (arr != null) {
@@ -138,7 +146,7 @@ export default {
                 return _tag
             }
 
-            if(file.name.toString().match(/[\',:;*?~`!#$%^&+=)(<>{}]|\]|\[|\/|\\\|"|\|/ig)){
+            if (file.name.toString().match(/[\',:;*?~`!#$%^&+=)(<>{}]|\]|\[|\/|\\\|"|\|/ig)) {
                 this.$message({
                     message: `${file.name} 包含特殊字符,请重新修改文件名`,
                     type: 'error'
@@ -170,33 +178,33 @@ export default {
                 return false;
             }
         },
-        handleExceed(files, fileList){
+        handleExceed (files, fileList) {
             this.$message({
                 message: '当前上传数量限制为' + this.limitNum,
                 type: 'error'
             })
         },
-        initData(){
+        initData () {
             uploadStatic()
-            .then(res=>{
-                this.staticData = res.data;
-            })
+                .then(res => {
+                    this.staticData = res.data;
+                })
         }
     }
 }
 </script>
 <style lang="less" scoped>
-@warnColor:red;
-.upload{
+@warnColor: red;
+.upload {
     clear: both;
     overflow: hidden;
 }
-.part-left{
+.part-left {
     width: 570px;
     margin: 60px 0 0 150px;
     float: left;
 }
-.part-right{
+.part-right {
     width: 300px;
     margin-left: 100px;
     margin-top: 140px;
@@ -212,16 +220,16 @@ export default {
         border-bottom: 1px solid @warnColor;
     }
 }
-/deep/ .el-upload-dragger{
+/deep/ .el-upload-dragger {
     height: auto;
 }
-@media (max-width: 750px) {    
-    .part-left{
+@media (max-width: 750px) {
+    .part-left {
         width: 100%;
         margin: 60px auto 0;
         float: none;
     }
-    /deep/ .el-form-item__label{
+    /deep/ .el-form-item__label {
         display: none;
     }
 }

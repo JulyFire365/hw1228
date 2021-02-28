@@ -1,55 +1,59 @@
 <template>
     <div class="home">
-    <div class="nav">
-        <p class="user">Hello, {{name}}.</p>
-        <el-menu
-            default-active="1"
-            class="el-menu-vertical-demo"
-            background-color="#333"
-            text-color="#fff"
-            active-text-color="#ffd04b">
-            <el-menu-item index="1">
-                <span slot="title"><router-link :to="{path:'/home/upload'}"><i class="el-icon-menu"></i>图片上传</router-link></span>
-            </el-menu-item>
-            <el-menu-item index="2">
-                <span slot="title"> <router-link :to="{path:'/home/imgList'}"><i class="el-icon-document"></i>相册列表</router-link></span>
-            </el-menu-item>
-        </el-menu>
+        <div class="nav">
+            <p class="user">Hello, {{name}}.</p>
+            <el-menu default-active="1"
+                     class="el-menu-vertical-demo"
+                     background-color="#333"
+                     text-color="#fff"
+                     active-text-color="#ffd04b">
+                <el-menu-item index="1">
+                    <span slot="title">
+                        <router-link :to="{path:'/home/upload'}"><i class="el-icon-menu"></i>图片上传</router-link>
+                    </span>
+                </el-menu-item>
+                <el-menu-item index="2">
+                    <span slot="title">
+                        <router-link :to="{path:'/home/imgList'}"><i class="el-icon-document"></i>相册列表</router-link>
+                    </span>
+                </el-menu-item>
+            </el-menu>
 
-        <p @click="logoutFn" class="logout">退出登录</p>
-    </div>
-    <div class="content">
-        <div class="wrap">
-            <router-view></router-view>
+            <p @click="logoutFn"
+               class="logout">退出登录</p>
         </div>
-    </div>
+        <div class="content">
+            <div class="wrap">
+                <router-view></router-view>
+            </div>
+        </div>
     </div>
 </template>
 <script>
-import {isLogin,logout} from '@/request'
+import { isLogin, logout } from '@/request'
 export default {
     name: 'home',
-    data(){
+    data () {
         return {
             name: ''
         }
     },
-    created(){
+    created () {
         this.loginStatus();
     },
     methods: {
-        loginStatus(){
-            isLogin().then(res=>{
-                if(res.status == 200){
+        loginStatus () {
+            isLogin().then(res => {
+                if (res.status == 200) {
                     this.name = res.data.name
-                }else{
+                } else {
                     this.$router.push('/admin');
                 }
             })
         },
-        logoutFn(){
-            logout().then(res=>{
-                if(res.status == 200){
+        logoutFn () {
+            logout().then(res => {
+                if (res.status == 200) {
                     this.$router.push('/admin');
                 }
             })
@@ -58,7 +62,7 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-.nav{
+.nav {
     width: 8%;
     min-width: 160px;
     height: 100%;
@@ -66,17 +70,18 @@ export default {
     background: #333;
     box-sizing: border-box;
     padding-top: 6%;
-    a,span {
+    a,
+    span {
         display: inline-block;
         width: 100%;
         height: 100%;
         box-sizing: border-box;
     }
-    .el-menu-item{
+    .el-menu-item {
         padding: 0;
     }
 }
-.user{
+.user {
     position: absolute;
     top: 0;
     left: 0;
@@ -85,16 +90,21 @@ export default {
     width: 100%;
     padding-top: 20px;
 }
-.logout{
+.logout {
     text-align: center;
     margin-top: 100px;
     color: #fff;
     text-decoration: underline;
     cursor: pointer;
 }
-a{color:#fff;text-decoration: none;}
-a.router-link-exact-active.router-link-active{color: #ffd04b;}
-.content{
+a {
+    color: #fff;
+    text-decoration: none;
+}
+a.router-link-exact-active.router-link-active {
+    color: #ffd04b;
+}
+.content {
     width: 100%;
     box-sizing: border-box;
     padding-left: 10%;
@@ -109,20 +119,21 @@ a.router-link-exact-active.router-link-active{color: #ffd04b;}
         min-height: 60vh;
     }
 }
-/deep/ .el-menu{
+/deep/ .el-menu {
     border-right: none;
 }
-@media (max-width:750px) {
-    .nav{
+@media (max-width: 750px) {
+    .nav {
         width: 100%;
         top: 0;
         height: 60px;
         padding-top: 0;
+        z-index: 2;
     }
-    .user{
+    .user {
         display: none;
     }
-    /deep/ .el-menu{
+    /deep/ .el-menu {
         width: 80%;
         float: left;
         li {
@@ -130,7 +141,7 @@ a.router-link-exact-active.router-link-active{color: #ffd04b;}
             float: left;
         }
     }
-    .logout{
+    .logout {
         width: 20%;
         float: right;
         margin-top: 24px;
