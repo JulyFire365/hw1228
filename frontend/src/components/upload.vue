@@ -231,6 +231,7 @@ export default {
     }
     /deep/ .el-form-item__label {
         display: none;
+        width: 0px !important;
     }
 }
 </style>
