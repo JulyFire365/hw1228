@@ -1,5 +1,5 @@
 <template>
-    <div class="wrap">
+    <div class="wraps">
         <div class="login-wrap">
             <el-form :model="ruleForm"
                      :rules="rules"
@@ -95,7 +95,7 @@ export default {
     width: 300px;
     margin: 14% auto;
 }
-.wrap {
+.wraps {
     height: 100vh;
     background: url(../pic/bg_5.jpg?2);
 }
