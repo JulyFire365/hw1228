@@ -4,7 +4,7 @@
             <el-form :model="ruleForm"
                      :rules="rules"
                      ref="ruleForm"
-                     label-width="200px"
+                     :label-width="width <= 750 ? '0px' : '200px'"
                      class="demo-ruleForm">
                 <el-form-item label="相册名称："
                               prop="folderId">
@@ -69,6 +69,7 @@ export default {
     name: 'upload',
     data () {
         return {
+            width: document.body.clientWidth,
             staticData: [],
             limitNum: 20,
             errArr: [],
