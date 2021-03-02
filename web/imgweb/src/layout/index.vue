@@ -15,7 +15,7 @@
     </el-header> -->
     <el-main class="main-container">
       <transition name="fade-transform" mode="out-in">
-        <keep-alive>
+        <keep-alive :include="views">
           <router-view />
         </keep-alive>
       </transition>
@@ -32,7 +32,21 @@ export default {
   components: {
 
   },
+  data() {
+    return {
+      views: []
+    }
+  },
   computed: {
+    cachedViews() {
+      const view = this.$route
+      const cachedViews = this.views
+      console.log(this.$route)
+      if (!cachedViews.includes(view.name) && view.meta.noCache) {
+        cachedViews.push(view.name)
+      }
+      return cachedViews
+    },
     classObj() {
       return {
         mobile: this.$_isMobile()

@@ -64,13 +64,13 @@ export const constantRoutes = [
       name: 'Album',
       component: () => import('@/views/home/index'),
       meta: { title: '首页', icon: 'dashboard', affix: true, noCache: true }
-    },{
-        path: 'photo/:id',
-        name: 'Photo',
-        hidden: true,
-        component: () => import('@/views/photo/index'),
-        meta: { title: '相片' }
-      }]
+    }, {
+      path: 'photo/:id',
+      name: 'Photo',
+      hidden: true,
+      component: () => import('@/views/photo/index'),
+      meta: { title: '相片' }
+    }]
   }
 
 ]

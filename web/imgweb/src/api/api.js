@@ -4,7 +4,7 @@ export function getPhoto(id) {
   return request({
     url: `/index.php?controller=folder&method=getAllImg`,
     method: 'get',
-    params: {id}
+    params: { id }
   })
 }
 
