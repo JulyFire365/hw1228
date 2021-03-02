@@ -12,7 +12,7 @@ const state = {
 }
 
 const mutations = {
-  TOGGLE_SIDEBAR: state => {
+  /* TOGGLE_SIDEBAR: state => {
     state.sidebar.opened = !state.sidebar.opened
     state.sidebar.withoutAnimation = false
     if (state.sidebar.opened) {
@@ -25,18 +25,18 @@ const mutations = {
     Cookies.set('sidebarStatus', 0)
     state.sidebar.opened = false
     state.sidebar.withoutAnimation = withoutAnimation
-  },
+  }, */
   TOGGLE_DEVICE: (state, device) => {
     state.device = device
   },
-  SET_LANGUAGE: (state, language) => {
+  /* SET_LANGUAGE: (state, language) => {
     state.language = language
     Cookies.set('language', language)
   },
   SET_SIZE: (state, size) => {
     state.size = size
     Cookies.set('size', size)
-  }
+  } */
 }
 
 const actions = {

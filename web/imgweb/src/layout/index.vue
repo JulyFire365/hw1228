@@ -1,33 +1,41 @@
 <template>
-  <div :class="classObj" class="app-wrapper">
-    <div v-if="device==='mobile'" class="drawer-bg" @click="handleClickOutside" />
-    <div class="main-container">
+
+  <el-container :class="classObj" class="app-wrapper" direction="vertical">
+    <!-- <div v-if="device==='mobile'" class="drawer-bg" @click="handleClickOutside" /> -->
+    <!-- <el-header style="font-size: 12px">
+      <el-dropdown>
+        <i class="el-icon-setting" style="margin-right: 15px"></i>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item>查看</el-dropdown-item>
+          <el-dropdown-item>新增</el-dropdown-item>
+          <el-dropdown-item>删除</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+      <span>王小虎</span>
+    </el-header> -->
+    <el-main class="main-container">
       <transition name="fade-transform" mode="out-in">
         <keep-alive>
           <router-view />
         </keep-alive>
       </transition>
-    </div>
-
-  </div>
+    </el-main>
+  </el-container>
 </template>
 
 <script>
 
-import { mapState } from 'vuex'
-
+const { body } = document
+const WIDTH = 992 // refer to Bootstrap's responsive design
 export default {
   name: 'Layout',
   components: {
-    
+
   },
   computed: {
-    ...mapState({
-      device: state => state.app.device,
-    }),
     classObj() {
       return {
-        mobile: this.device === 'mobile'
+        mobile: this.$_isMobile()
       }
     }
   },
@@ -35,14 +43,38 @@ export default {
 
   },
   methods: {
-    handleClickOutside() {
-      this.$store.dispatch('app/closeSideBar', { withoutAnimation: false })
+    $_isMobile() {
+      const rect = body.getBoundingClientRect()
+      return rect.width - 1 < WIDTH
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+  @mixin clearfix {
+    &:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+  }
+
+  .app-wrapper {
+    @include clearfix;
+    position: relative;
+    height: 100%;
+    align-items: center;
+
+    &.mobile.openSidebar {
+      position: fixed;
+      top: 0;
+    }
+  }
+  .main-container{
+    width: 100%;
+    max-width: 1200px;
+  }
   .mobile .fixed-header {
     width: 100%;
   }

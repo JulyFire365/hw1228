@@ -1,4 +1,4 @@
-import variables from '@/assets/styles/element-variables.scss'
+// import variables from '@/assets/styles/element-variables.scss'
 // import defaultSettings from '@/settings'
 // Settings.ApiHostUrl = Settings.ApiHostUrl || '//' + window.location.host
 // const defaultSettings = Settings
@@ -19,7 +19,7 @@ const state = {
 
 const mutations = {
   CHANGE_SETTING: (state, { key, value }) => {
-    if (state.hasOwnProperty(key)) {
+    if (Object.prototype.hasOwnProperty.call(state, key)) {
       state[key] = value
     }
   }

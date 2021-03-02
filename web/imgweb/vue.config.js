@@ -1,10 +1,11 @@
 'use strict'
 const path = require('path')
+const defaultSettings = require('./public/settings.js')
+const name = defaultSettings.title // 网址标题
 
 function resolve(dir) {
   return path.join(__dirname, dir)
 }
-
 
 // If your port is set to 80,
 // use administrator privileges to execute the command line.
@@ -35,6 +36,7 @@ module.exports = {
       warnings: false,
       errors: true
     },
+    proxy: defaultSettings.ApiHostUrl
     // before: require('./mock/mock-server.js')
   },
   configureWebpack: {
@@ -49,7 +51,12 @@ module.exports = {
   chainWebpack(config) {
     config.plugins.delete('preload') // TODO: need test
     config.plugins.delete('prefetch') // TODO: need test
-
+    config
+      .plugin('html')
+      .tap(args => {
+        args[0].title = name
+        return args
+      })
     // set svg-sprite-loader
     config.module
       .rule('svg')

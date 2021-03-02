@@ -4,7 +4,7 @@ import Layout from '@/layout'
 // import { buildMenus, getUserMenu } from '@/api/system/menu'
 // import asyncRoutes from '@/router/asyncRoutes'
 // import { getUserMenu } from '@/api/user'
-
+const getUserMenu = ()=>{}
 /**
  * Use meta.role to determine if the current user has permission
  * @param roles
