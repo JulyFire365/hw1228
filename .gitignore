@@ -1,9 +1,11 @@
 config.php
 .env
-./public
+public
 ./views/index.php
 .git
 .user.ini
 .htaccess
 favicon.ico
-./img
+img
+shellImgCmd
+.gitignore.swp
