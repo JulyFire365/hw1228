@@ -16,7 +16,7 @@
     <el-main class="main-container">
       <transition name="fade-transform" mode="out-in">
         <keep-alive :include="views">
-          <router-view />
+          <router-view :key="key" />
         </keep-alive>
       </transition>
     </el-main>
@@ -41,11 +41,14 @@ export default {
     cachedViews() {
       const view = this.$route
       const cachedViews = this.views
-      console.log(this.$route)
+      // console.log(this.$route)
       if (!cachedViews.includes(view.name) && view.meta.noCache) {
         cachedViews.push(view.name)
       }
       return cachedViews
+    },
+    key() {
+      return this.$route.path
     },
     classObj() {
       return {
