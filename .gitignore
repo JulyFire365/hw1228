@@ -2,3 +2,8 @@ config.php
 .env
 ./public
 ./views/index.php
+.git
+.user.ini
+.htaccess
+favicon.ico
+./img
