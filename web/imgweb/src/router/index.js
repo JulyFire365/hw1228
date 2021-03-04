@@ -63,7 +63,7 @@ export const constantRoutes = [
       path: 'index',
       name: 'Album',
       component: () => import('@/views/home/index'),
-      meta: { title: '首页', icon: 'dashboard', affix: true, noCache: true }
+      meta: { title: '首页', icon: 'dashboard' }
     }, {
       path: 'photo/:id',
       name: 'Photo',

@@ -42,7 +42,7 @@ export default {
       const view = this.$route
       const cachedViews = this.views
       // console.log(this.$route)
-      if (!cachedViews.includes(view.name) && view.meta.noCache) {
+      if (!cachedViews.includes(view.name) && !view.meta.noCache) {
         cachedViews.push(view.name)
       }
       return cachedViews
@@ -80,7 +80,6 @@ export default {
   .app-wrapper {
     @include clearfix;
     position: relative;
-    height: 100%;
     align-items: center;
 
     &.mobile.openSidebar {
