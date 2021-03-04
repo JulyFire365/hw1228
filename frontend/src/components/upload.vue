@@ -4,7 +4,7 @@
             <el-form :model="ruleForm"
                      :rules="rules"
                      ref="ruleForm"
-                     :label-width="width <= 750 ? '0px' : '200px'"
+                     :label-width="0"
                      class="demo-ruleForm">
                 <el-form-item label="相册名称："
                               prop="folderId">

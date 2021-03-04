@@ -1,6 +1,4 @@
 <?php
-    phpinfo();
-    exit;
     if(!session_id()){
         session_start();
     }
