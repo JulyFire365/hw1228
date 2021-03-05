@@ -3,10 +3,10 @@
         <div class="part-left">
             <el-form :model="ruleForm"
                      :rules="rules"
-                     ref="ruleForm"
                      :label-width="0"
+                     ref="ruleForm"
                      class="demo-ruleForm">
-                <el-form-item label="相册名称："
+                <el-form-item label=""
                               prop="folderId">
                     <el-select v-model="ruleForm.folderId"
                                filterable
