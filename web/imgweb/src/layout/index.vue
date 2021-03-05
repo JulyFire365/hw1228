@@ -81,6 +81,7 @@ export default {
     @include clearfix;
     position: relative;
     align-items: center;
+    overflow: auto;
 
     &.mobile.openSidebar {
       position: fixed;

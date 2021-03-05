@@ -3,7 +3,7 @@
     <el-page-header :content="name" @back="goBack" />
     <div class="image-box">
       <div v-for="(item,n) in list" :key="n" class="block">
-        <el-image class="img" :src="item" :preview-src-list="list" fit="cover" />
+        <el-image class="img" :src="item" :preview-src-list="list" fit="cover" lazy />
       </div>
     </div>
   </div>
