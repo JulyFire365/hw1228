@@ -3,12 +3,13 @@
         <div class="part-left">
             <el-form :model="ruleForm"
                      :rules="rules"
-                     :label-width="0"
+                     label-width="0px"
                      ref="ruleForm"
                      class="demo-ruleForm">
                 <el-form-item label=""
                               prop="folderId">
                     <el-select v-model="ruleForm.folderId"
+                               @change="changeDir"
                                filterable
                                allow-create
                                default-first-option
@@ -69,6 +70,7 @@ export default {
     name: 'upload',
     data () {
         return {
+            insetDirFlag: true,
             width: document.body.clientWidth,
             staticData: [],
             limitNum: 20,
@@ -87,6 +89,9 @@ export default {
         this.initData();
     },
     methods: {
+        changeDir(){
+            this.insetDirFlag = true;
+        },
         changeFn (file, fileList) {
             // console.log(file);
             // console.log(fileList);
@@ -108,7 +113,8 @@ export default {
                             _flag = false;
                         }
                     })
-                    _flag && foldRecordInDb({ id: this.ruleForm.folderId })
+                    this.insetDirFlag && _flag && foldRecordInDb({ id: this.ruleForm.folderId });
+                    this.insetDirFlag = false;
                 }
             }
 
