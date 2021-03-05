@@ -1,7 +1,7 @@
 config.php
 .env
 public
-./views/index.php
+views/index.php
 .git
 .user.ini
 .htaccess
