@@ -1,7 +1,7 @@
 <template>
   <div class="image-box">
     <div v-for="item in list" :key="item.id" class="block" @click="click(item)">
-      <el-image class="img" :src="item.link" fit="cover" />
+      <el-image class="img" :src="item.link" fit="cover" lazy />
       <div class="name">{{ item.name }}</div>
     </div>
   </div>
