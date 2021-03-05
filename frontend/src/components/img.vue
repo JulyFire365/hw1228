@@ -36,10 +36,10 @@ export default {
     },
     created () {
         this.id = location.href.split('?id=')[1] || '';
-        this.getList();
+        this.getAllFn();
     },
     methods: {
-        getList () {
+        getAllFn () {
             getAllImg({ id: this.id }).then(res => {
                 if (res.status == 200) {
                     this.imgArr = res.data;

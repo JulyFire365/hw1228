@@ -5,12 +5,18 @@
 class folderController extends Base{
     public static $acceptType = ['jpg','jpeg','png','gif'];
     public function getList(){
-        $folder = M('folder');
-        $data = $folder->initFolderList();
-        $newData = [];
-        foreach($data as $key=>$value){
-            $newData[] = arr2obj($value);
+        if(isset($_SESSION['folder'])){
+            $newData = $_SESSION['folder'];
+        }else{
+            $folder = M('folder');
+            $data = $folder->initFolderList();
+            $newData = [];
+            foreach($data as $key=>$value){
+                $newData[] = arr2obj($value);
+            } 
+            $_SESSION['folder'] = $newData;
         }
+
         $this->ajaxInfo($newData,'',STATUS_SUCCESS);
     }
 
