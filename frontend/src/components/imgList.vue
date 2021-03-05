@@ -1,20 +1,19 @@
 <template>
     <div>
         <ul>
-            <li v-for="(item,index) in imgList" :key="index" @click="linkToIMg(item.id)">
+            <li v-for="(item,index) in staticData" :key="index" @click="linkToIMg(item.id)">
                 <img :src="item.link" alt="">
-                <p>{{item.name}}</p>
+                <p>{{item.name_ch}}</p>
             </li>
         </ul>
     </div>
 </template>
 <script>
-import {getAllFile,uploadStatic} from '@/request';
+import {uploadStatic} from '@/request';
 export default {
     name: 'imgList',
     data(){
         return {
-            imgList: [],
             staticData: []
         }
     },
@@ -23,10 +22,6 @@ export default {
     },
     methods: {
         init(){
-            getAllFile().then(res=>{
-                console.log(res.data);
-                this.imgList = res.data
-            })
             uploadStatic().then(res=>{
                 this.staticData = res.data;
             })
@@ -74,6 +69,17 @@ li {
         background: rgba(0,0,0,0.9);
         color: #f5f5f5;
         opacity: .5;
+    }
+}
+
+@media (max-width:750px) {
+    li{
+        margin: 2%;
+        width: 46%;
+    }
+    ul {
+        position: relative;
+        top: 40px;
     }
 }
 </style>
