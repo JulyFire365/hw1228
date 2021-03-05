@@ -10,7 +10,7 @@ export function getPhoto(id) {
 
 export function getAlbum() {
   return request({
-    url: '/index.php?controller=folder&method=getAllFile',
+    url: '/index.php?controller=folder&method=getList',
     method: 'get'
   })
 }
