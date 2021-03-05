@@ -18,19 +18,28 @@ class folderController extends Base{
         $folderId = $_GET['id'];
         $folder = M('folder');
         $dataId = $folder->findFolderName($folderId);
+        if(!$dataId){
+            $dir =  dirname(__FILE__);
+            $file = $this->readDirectory($dir.'/../img/'.$folderId.'/');
+            $link = '';
+            $type = substr(strrchr($file[0], '.'), 1);
+            $type = strtolower($type);
+            if(in_array($type,self::$acceptType)){
+                $link = "/img/".$folderId."/".$file[0];
+            }else{
+                $link = "/img/默认相册/test.jpg";
+            }
+            $folder->insertFolderName($folderId,$link);
+        }
 
-        !$dataId && $folder->insertFolderName($folderId);
         $this->ajaxInfo([],'',STATUS_SUCCESS);
     }
 
     public function tempDir(){
         $folderId = $_POST['folderId'];
-
         $folder = M('folder');
         $dataId = $folder->findFolderId($folderId);
-        
         $fileName = $dataId ? $dataId['name_ch'] : $folderId;
-
         $accept = ['application/x-gzip','application/x-tar','application/octet-stream','application/x-zip-compressed','image/x-png','image/png','image/jpg','image/jpeg','image/pjpeg','image/gif'];
         $packArr = array_slice($accept,0,4);
  
@@ -62,65 +71,48 @@ class folderController extends Base{
         $this->ajaxInfo([],$info,STATUS_ERROR);
     }
 
-    public function getAllFile(){
-        //获取当前文件所在的绝对目录
-        $dir =  dirname(__FILE__);
-        //扫描文件夹
-        $file = scandir($dir.'/../img');
-        //显示
-        $fileArr = [];
-        $foldArr = array_slice($file,2);
-        foreach($foldArr as $key=>$value){
-            $newFile = scandir($dir.'/../img/'.$value);
-            $type = substr(strrchr($newFile[2], '.'), 1);
-            $type = strtolower($type);
-            if(in_array($type,self::$acceptType)){
-                $fileArr[$value] = $newFile[2];
-            }else{
-                $fileArr[$value] = "special_handle";
-            }
+    /**  
+    * @access public 
+    * @param mixed $directory 需要读取的目录路径名称
+    * @return array 返回类型
+    */  
+    public function readDirectory($directory){
+        if(is_dir($directory) === false){
+            return false;
         }
-        $data = [];
-        $folder = M('folder');
-        $dataStatic = $folder->initFolderList();
-        $dataArr = [];
-        foreach($dataStatic as $key=>$value){
-            $dataArr[] = [$value['name_ch'] => $value[id]];
-        }
-        $i = 0;
-        foreach($fileArr as $key=>$value){
-            $obj = [];
-            foreach($dataStatic as $key1=>$value1){
-                if($value1['name_ch'] == $key){
-                    $obj['id'] = $value1['id'];
+        try{
+            $resource = opendir($directory);
+            $fold = array();
+
+            while(false !== ($item = readdir($resource))){
+                if($item == '.' || $item == '..'){
+                    continue;
                 }
+                // if(is_dir($directory.$item)){
+                    $fold[] = $item;
+                // }else{
+                    // $fold[] = $directory.$item;
+                // }
             }
-            $i++;
-            $obj['name'] = $key;
-            $obj['link'] = $value == 'special_handle' ? '/img/默认相册/test.jpg' : '/img/'.$key.'/'.$value;
-            $data[] = arr2obj($obj);
+        }catch(Exception $e){
+            return false;
         }
-        $this->ajaxInfo($data,'',STATUS_SUCCESS);
+        return $fold;
     }
 
     public function getAllImg(){
         $id = $_GET['id'];
         $folder = M('folder');
         $dataName = $folder->findFolderId($id);
- 
-        $imgArr = [];
         $dir =  dirname(__FILE__);
         $data = [];
         if($dataName['name_ch']){
-            $imgArr = scandir($dir.'/../img/'.$dataName['name_ch']);
-            if(count($imgArr) > 2){
-                $imgArr = array_slice($imgArr,2);
-                foreach($imgArr as $key=>$value){
-                    $type = substr(strrchr($value, '.'), 1);
-                    $type = strtolower($type);
-                    if(in_array($type,self::$acceptType)){
-                        $data[] = '/img/'.$dataName['name_ch'].'/'.$value;
-                    }
+            $imgArr = $this->readDirectory($dir.'/../img/'.$dataName['name_ch']);
+            foreach($imgArr as $key=>$value){
+                $type = substr(strrchr($value, '.'), 1);
+                $type = strtolower($type);
+                if(in_array($type,self::$acceptType)){
+                    $data[] = '/img/'.$dataName['name_ch'].'/'.$value;
                 }
             }
         }

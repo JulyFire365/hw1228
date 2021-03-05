@@ -17,10 +17,6 @@ export const logout = () => {
 export const uploadStatic = () => {
     return api.get(`/index.php?controller=folder&method=getList`);
 };
-//获取文件列表及第一张图片路径
-export const getAllFile = () => {
-    return api.get(`/index.php?controller=folder&method=getAllFile`);
-};
 
 export const getAllImg = param => {
     return api.get(`/index.php?controller=folder&method=getAllImg`,param);
