@@ -12,6 +12,7 @@
                                @change="changeDir"
                                @hook:mounted="cancalReadOnly"
                                @visible-change="cancalReadOnly"
+                               ref="selectWrap"
                                filterable
                                allow-create
                                default-first-option
@@ -94,8 +95,8 @@ export default {
         cancalReadOnly(onOff) {
             this.$nextTick(() => {
                 if (!onOff) {
-                    const {select} = this.$refs;
-                    const input = select.$el.querySelector('.el-input__inner');
+                    const select = this.$refs;
+                    const input = select.selectWrap.$el.querySelector('.el-input__inner');
                     input.removeAttribute('readonly');
                 }
             });

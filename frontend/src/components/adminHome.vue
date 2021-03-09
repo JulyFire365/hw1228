@@ -9,12 +9,12 @@
                      active-text-color="#ffd04b">
                 <el-menu-item index="1">
                     <span slot="title">
-                        <router-link :to="{path:'/home/upload'}"><i class="el-icon-menu"></i>图片上传</router-link>
+                        <a href="/home/upload"><i class="el-icon-menu"></i>图片上传</a>
                     </span>
                 </el-menu-item>
                 <el-menu-item index="2">
                     <span slot="title">
-                        <router-link :to="{path:'/home/imgList'}"><i class="el-icon-document"></i>相册列表</router-link>
+                        <a href="/home/imgList"><i class="el-icon-document"></i>相册列表</a>
                     </span>
                 </el-menu-item>
             </el-menu>
