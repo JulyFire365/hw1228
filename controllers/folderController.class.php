@@ -151,4 +151,27 @@ class folderController extends Base{
         }
         $this->ajaxInfo($data,'',STATUS_SUCCESS); 
     }
+
+    public function delFold(){
+        $idArr = $_GET['idArr'];
+        $folder = M('folder');
+        $delResult = $folder->delFolder($idArr);
+
+        $redis = new pRedis();
+        $foldList = $redis->get('folderList');
+        $newFoldList = [];
+
+        if($foldList){
+            foreach($foldList as $key=>$value){
+                if(!in_array($value['id'],$idArr)){
+                    $newFoldList[] = arr2obj($value);
+                }else{
+                    // exec('rm -rf img/'.$value['name_ch']);
+                }
+            }
+            $redis->set('folderList',$newFoldList);
+        }
+
+        $this->ajaxInfo([],'success',STATUS_SUCCESS);
+    }
 }

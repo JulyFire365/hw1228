@@ -27,3 +27,6 @@ export const foldRecordInDb = param => {
     return api.get(`/index.php?controller=folder&method=foldRecordInDb`,param);
 };
 
+export const delFold = param => {
+    return api.get(`/index.php?controller=folder&method=delFold`,param);
+};
