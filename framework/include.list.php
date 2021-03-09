@@ -5,5 +5,6 @@ $paths = [
     'common/function.php',
     'common/mysql.class.php',
     'common/db.class.php',
-    'common/view.class.php'
+    'common/view.class.php',
+    'common/redis.class.php'
 ];
