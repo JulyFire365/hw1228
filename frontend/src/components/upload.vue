@@ -245,7 +245,7 @@ export default {
 @media (max-width: 750px) {
     .part-left {
         width: 100%;
-        margin: 60px auto 0;
+        margin: 40px auto 0;
         float: none;
     }
     /deep/ .el-form-item__label {

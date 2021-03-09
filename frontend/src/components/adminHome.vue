@@ -153,8 +153,8 @@ a.router-link-exact-active.router-link-active {
         padding-top: 0;
         .wrap {
             width: 100%;
-            height: 100vh;
-            padding: 20px;
+            // height: 100vh;
+            padding: 60px 20px 20px;
         }
     }
 }
