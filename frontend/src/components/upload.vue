@@ -10,6 +10,8 @@
                               prop="folderId">
                     <el-select v-model="ruleForm.folderId"
                                @change="changeDir"
+                               @hook:mounted="cancalReadOnly"
+                               @visible-change="cancalReadOnly"
                                filterable
                                allow-create
                                default-first-option
@@ -64,18 +66,7 @@
         </ul>
     </div>
 </template>
-<script>
-
-Array.from(document.getElementsByClassName('el-select')).forEach((item) => {
-      item.children[0].children[0].removeAttribute('readOnly')
-      item.children[0].children[0].onblur = function () {
-        let _this = this
-        setTimeout(() => {
-          _this.removeAttribute('readOnly')
-        }, 200)
-      }
-    });
-    
+<script>  
 import { uploadStatic, foldRecordInDb } from '@/request'
 export default {
     name: 'upload',
@@ -100,6 +91,15 @@ export default {
         this.initData();
     },
     methods: {
+        cancalReadOnly(onOff) {
+            this.$nextTick(() => {
+                if (!onOff) {
+                    const {select} = this.$refs;
+                    const input = select.$el.querySelector('.el-input__inner');
+                    input.removeAttribute('readonly');
+                }
+            });
+        },
         changeDir(){
             this.insetDirFlag = true;
         },
