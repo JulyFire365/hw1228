@@ -15,8 +15,8 @@ class folderModel{
         return DB::findOne($sql);
     }
 
-    public function insertFolderName($folderName,$link){
-        $arr = ['name_ch'=>$folderName,'link'=>$link];
+    public function insertFolderName($id,$folderName,$link){
+        $arr = ['id'=>$id,'name_ch'=>$folderName,'link'=>$link];
         return DB::insert('folders',$arr);
     }
 }
