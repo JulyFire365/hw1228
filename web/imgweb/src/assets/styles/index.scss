@@ -228,10 +228,10 @@ aside {
     margin: -5px;
     .block{
       margin: 5px;
-      width: 75px;
+      width: calc(50% - 10px);
     }
     .img{
-      height: 75px;
+      height: calc(50vw - 50px);
     }
   }
 }
