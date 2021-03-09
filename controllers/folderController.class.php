@@ -5,8 +5,10 @@
 class folderController extends Base{
     public static $acceptType = ['jpg','jpeg','png','gif'];
     public function getList(){
-        if(isset($_SESSION['folder'])){
-            $newData = $_SESSION['folder'];
+        $redis = new pRedis();
+
+        if($redis->get('folderList')){
+            $newData = $redis->get('folderList');
         }else{
             $folder = M('folder');
             $data = $folder->initFolderList();
@@ -14,7 +16,7 @@ class folderController extends Base{
             foreach($data as $key=>$value){
                 $newData[] = arr2obj($value);
             } 
-            $_SESSION['folder'] = $newData;
+            $redis->set('folderList',$newData);
         }
 
         $this->ajaxInfo($newData,'',STATUS_SUCCESS);
@@ -24,7 +26,21 @@ class folderController extends Base{
         $folderId = $_GET['id'];
         $folder = M('folder');
         $dataId = $folder->findFolderName($folderId);
-        if(!$dataId){
+        $_id = null;
+
+        $redis = new pRedis();
+        $foldList = $redis->get('folderList');
+
+        $flag = false;
+
+        foreach($foldList as $key=>$value){
+            if($value['name_ch'] == $folderId || $value['id'] == $folderId){
+                $flag = true;
+            }
+            $_id = $value['id'];
+        }
+
+        if(!$dataId && !$flag){
             $dir =  dirname(__FILE__);
             $file = $this->readDirectory($dir.'/../img/'.$folderId.'/');
             $link = '';
@@ -35,7 +51,18 @@ class folderController extends Base{
             }else{
                 $link = "/img/默认相册/test.jpg";
             }
-            $folder->insertFolderName($folderId,$link);
+            $_id = $_id + 1;
+            $arr = [
+                'id'      => $_id,
+                'name_ch' => $folderId,
+                'link'    => $link
+            ];
+
+            array_push($foldList, arr2obj($arr));
+
+            $redis->set('folderList',$foldList);
+
+            $folder->insertFolderName($_id,$folderId,$link);
         }
 
         $this->ajaxInfo([],'',STATUS_SUCCESS);

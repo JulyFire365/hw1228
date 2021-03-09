@@ -10,6 +10,9 @@
                               prop="folderId">
                     <el-select v-model="ruleForm.folderId"
                                @change="changeDir"
+                               @hook:mounted="cancalReadOnly"
+                               @visible-change="cancalReadOnly"
+                               ref="selectWrap"
                                filterable
                                allow-create
                                default-first-option
@@ -64,7 +67,7 @@
         </ul>
     </div>
 </template>
-<script>
+<script>  
 import { uploadStatic, foldRecordInDb } from '@/request'
 export default {
     name: 'upload',
@@ -89,6 +92,15 @@ export default {
         this.initData();
     },
     methods: {
+        cancalReadOnly(onOff) {
+            this.$nextTick(() => {
+                if (!onOff) {
+                    const select = this.$refs;
+                    const input = select.selectWrap.$el.querySelector('.el-input__inner');
+                    input.removeAttribute('readonly');
+                }
+            });
+        },
         changeDir(){
             this.insetDirFlag = true;
         },
@@ -233,7 +245,7 @@ export default {
 @media (max-width: 750px) {
     .part-left {
         width: 100%;
-        margin: 60px auto 0;
+        margin: 40px auto 0;
         float: none;
     }
     /deep/ .el-form-item__label {

@@ -78,8 +78,7 @@ li {
         width: 46%;
     }
     ul {
-        position: relative;
-        top: 40px;
+        padding-top: 20px;
     }
 }
 </style>
