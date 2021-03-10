@@ -66,7 +66,7 @@ export default {
 <style lang="less" scoped>
 .del-wrap {
     box-sizing: border-box;
-    margin: 20px;
+    margin: 0 0 0 20px;
 }
 ul {
     overflow: hidden;
@@ -112,6 +112,9 @@ li {
     }
     ul {
         padding-top: 20px;
+    }
+    .del-wrap {
+        margin: 20px 0 0 10px;
     }
 }
 </style>
