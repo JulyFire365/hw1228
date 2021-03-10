@@ -9,12 +9,12 @@
                      active-text-color="#ffd04b">
                 <el-menu-item index="1">
                     <span slot="title">
-                        <router-link :to="{path:'/home/upload'}"><i class="el-icon-menu"></i>图片上传</router-link>
+                        <a href="/home/upload"><i class="el-icon-menu"></i>图片上传</a>
                     </span>
                 </el-menu-item>
                 <el-menu-item index="2">
                     <span slot="title">
-                        <router-link :to="{path:'/home/imgList'}"><i class="el-icon-document"></i>相册列表</router-link>
+                        <a href="/home/imgList"><i class="el-icon-document"></i>相册列表</a>
                     </span>
                 </el-menu-item>
             </el-menu>
@@ -108,11 +108,11 @@ a.router-link-exact-active.router-link-active {
     width: 100%;
     box-sizing: border-box;
     padding-left: 10%;
-    padding-top: 30px;
+    padding-top: 10px;
     background: #f5f5f5;
-    height: 100vh;
+    min-height: 100vh;
     .wrap {
-        width: 98%;
+        width: 99%;
         box-sizing: border-box;
         padding: 40px 40px 100px;
         background: #fff;
@@ -151,10 +151,10 @@ a.router-link-exact-active.router-link-active {
     .content {
         padding-left: 0;
         padding-top: 0;
+        
         .wrap {
             width: 100%;
-            height: 100vh;
-            padding: 20px;
+            padding: 60px 10px 20px;
         }
     }
 }

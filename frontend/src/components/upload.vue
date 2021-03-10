@@ -10,6 +10,9 @@
                               prop="folderId">
                     <el-select v-model="ruleForm.folderId"
                                @change="changeDir"
+                               @hook:mounted="cancalReadOnly"
+                               @visible-change="cancalReadOnly"
+                               ref="selectWrap"
                                filterable
                                allow-create
                                default-first-option
@@ -44,7 +47,7 @@
                             <div class="el-upload__text">
                                 <p>将文件拖到此处，或<em>点击上传</em></p>
                                 <div style="padding:0 10px 20px; line-height: 26px;">支持扩展名：<strong style="font-weight:bold;">.jpg .png .gif .zip .rar .tar .gz </strong>
-                                    单个文件不超过100M, 一次至多上传20个源文件, 封面图默认第一个图片文件
+                                    单个文件不超过200M, 一次至多上传200个源文件, 封面图默认第一个图片文件
                                 </div>
                             </div>
                         </el-upload>
@@ -64,18 +67,7 @@
         </ul>
     </div>
 </template>
-<script>
-
-Array.from(document.getElementsByClassName('el-select')).forEach((item) => {
-      item.children[0].children[0].removeAttribute('readOnly')
-      item.children[0].children[0].onblur = function () {
-        let _this = this
-        setTimeout(() => {
-          _this.removeAttribute('readOnly')
-        }, 200)
-      }
-    });
-    
+<script>  
 import { uploadStatic, foldRecordInDb } from '@/request'
 export default {
     name: 'upload',
@@ -84,7 +76,7 @@ export default {
             insetDirFlag: true,
             width: document.body.clientWidth,
             staticData: [],
-            limitNum: 20,
+            limitNum: 200,
             errArr: [],
             ruleForm: {
                 folderId: ''
@@ -100,6 +92,15 @@ export default {
         this.initData();
     },
     methods: {
+        cancalReadOnly(onOff) {
+            this.$nextTick(() => {
+                if (!onOff) {
+                    const select = this.$refs;
+                    const input = select.selectWrap.$el.querySelector('.el-input__inner');
+                    input.removeAttribute('readonly');
+                }
+            });
+        },
         changeDir(){
             this.insetDirFlag = true;
         },
@@ -146,7 +147,7 @@ export default {
             this.$refs[formName].validate((valid) => { });
         },
         handleBeforeUpload (file) {
-            const isLt100M = file.size / 1024 / 1024 < 100
+            const isLt200M = file.size / 1024 / 1024 < 201
             const chineseReg = /[\u4E00-\u9fff]+/g
             const isChineseName = chineseReg.test(file.name)
 
@@ -180,9 +181,9 @@ export default {
                 return false;
             }
 
-            if (!isLt100M) {
+            if (!isLt200M) {
                 this.$message({
-                    message: `${file.name} 文件超过 100M, 上传失败!`,
+                    message: `${file.name} 文件超过 200M, 上传失败!`,
                     type: 'error'
                 })
                 return false;
@@ -244,7 +245,7 @@ export default {
 @media (max-width: 750px) {
     .part-left {
         width: 100%;
-        margin: 60px auto 0;
+        margin: 40px auto 0;
         float: none;
     }
     /deep/ .el-form-item__label {
@@ -253,6 +254,14 @@ export default {
     }
     /depp/ .el-form-item__content {
         margin-left: 0px !important;
+    }
+
+    /deep/ .el-upload-dragger{
+        width: 100%;
+    }
+
+    /deep/ .el-select {
+        width: 100%;
     }
 }
 </style>

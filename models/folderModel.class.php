@@ -19,4 +19,8 @@ class folderModel{
         $arr = ['id'=>$id,'name_ch'=>$folderName,'link'=>$link];
         return DB::insert('folders',$arr);
     }
+
+    public function delFolder($idArr){
+        return DB::deleteNew('folders',$idArr);
+    }
 }

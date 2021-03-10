@@ -5,18 +5,18 @@
                 :key="index">
                 <div class="wrap"
                      @click="viewPic(item)">
-                    <img :src="item"
+                    <img :src="item.thumbImg"
                          alt="">
                 </div>
-                <p class="txt">{{item.split('/')[item.split('/').length-1]}}</p>
+                <p class="txt">{{item.originImg.split('/')[item.originImg.split('/').length-1]}}</p>
             </li>
         </ul>
         <div class="empty"
              v-else>相册暂无图片</div>
 
-        <el-dialog title="大图"
+        <el-dialog title=""
                    class="pop"
-                   width="40%"
+                   height="80%"
                    :visible.sync="dialogVisible">
             <img :src="imgCur"
                  alt="">
@@ -47,7 +47,7 @@ export default {
             })
         },
         viewPic (img) {
-            this.imgCur = img;
+            this.imgCur = img.originImg;
             this.dialogVisible = true
         }
     }
@@ -63,9 +63,10 @@ export default {
 }
 .pop {
     text-align: center;
-
+    height: 100vh;
     img {
-        max-width: 90%;
+        max-width: 100%;
+        max-height: 100%;
     }
 }
 .dialog-footer {
@@ -110,19 +111,18 @@ li {
     margin: 200px 0;
 }
 
+/deep/ .el-dialog__body{
+    padding-top: 0;
+}
+
 @media (max-width: 750px) {
     /deep/ .el-dialog {
         width: 100% !important;
     }
-    ul {
-        margin-top: 50px;
-    }
+
     li {
         width: 46%;
         margin: 20px 2%;
-    }
-    .pop {
-        width: 100%;
     }
 }
 </style>
