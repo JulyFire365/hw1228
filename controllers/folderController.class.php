@@ -47,7 +47,8 @@ class folderController extends Base{
             $type = substr(strrchr($file[0], '.'), 1);
             $type = strtolower($type);
             if(in_array($type,self::$acceptType)){
-                $link = file_exists("/thumbImg/".$folderId."/".$file[0]) ? "/thumbImg/".$folderId."/".$file[0] : "/img/".$folderId."/".$file[0];
+                // $link = file_exists("/thumbImg/".$folderId."/".$file[0]) ? "/thumbImg/".$folderId."/".$file[0] : "/img/".$folderId."/".$file[0];
+                $link = "/thumbImg/".$folderId."/".$file[0];
             }else{
                 $link = "/thumbImg/默认相册/test.jpg";
             }
