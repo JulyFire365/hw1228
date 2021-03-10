@@ -108,11 +108,11 @@ a.router-link-exact-active.router-link-active {
     width: 100%;
     box-sizing: border-box;
     padding-left: 10%;
-    padding-top: 30px;
+    padding-top: 10px;
     background: #f5f5f5;
-    height: 100vh;
+    min-height: 100vh;
     .wrap {
-        width: 98%;
+        width: 99%;
         box-sizing: border-box;
         padding: 40px 40px 100px;
         background: #fff;
@@ -154,7 +154,7 @@ a.router-link-exact-active.router-link-active {
         
         .wrap {
             width: 100%;
-            padding: 60px 20px 20px;
+            padding: 60px 10px 20px;
         }
     }
 }

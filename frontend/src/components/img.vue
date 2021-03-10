@@ -119,15 +119,10 @@ li {
     /deep/ .el-dialog {
         width: 100% !important;
     }
-    ul {
-        margin-top: 50px;
-    }
+
     li {
         width: 46%;
         margin: 20px 2%;
-    }
-    .pop {
-        // width: 100%;
     }
 }
 </style>

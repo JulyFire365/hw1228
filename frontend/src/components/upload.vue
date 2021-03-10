@@ -255,5 +255,13 @@ export default {
     /depp/ .el-form-item__content {
         margin-left: 0px !important;
     }
+
+    /deep/ .el-upload-dragger{
+        width: 100%;
+    }
+
+    /deep/ .el-select {
+        width: 100%;
+    }
 }
 </style>
