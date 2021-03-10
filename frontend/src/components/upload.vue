@@ -76,7 +76,7 @@ export default {
             insetDirFlag: true,
             width: document.body.clientWidth,
             staticData: [],
-            limitNum: 100,
+            limitNum: 200,
             errArr: [],
             ruleForm: {
                 folderId: ''
