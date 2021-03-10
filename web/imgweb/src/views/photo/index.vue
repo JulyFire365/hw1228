@@ -1,9 +1,9 @@
 <template>
   <div>
-    <el-page-header :content="name" @back="goBack" />
+    <el-page-header :content="name+` (${list.length}张图片)`" @back="goBack" />
     <div class="image-box">
       <div v-for="(item,n) in list" :key="n" class="block">
-        <el-image class="img" :src="item" :preview-src-list="list" fit="cover" lazy />
+        <el-image class="img" :src="item.thumbImg" :preview-src-list="getPreview(n)" fit="cover" lazy />
       </div>
     </div>
   </div>
@@ -37,6 +37,11 @@ export default {
     },
     goBack() {
       this.$router.back()
+    },
+    getPreview(index) {
+      const arr = this.list.map(a => a.originImg)
+      const split = arr.splice(index)
+      return split.concat(arr)
     }
   }
 }
