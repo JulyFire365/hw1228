@@ -47,7 +47,7 @@
                             <div class="el-upload__text">
                                 <p>将文件拖到此处，或<em>点击上传</em></p>
                                 <div style="padding:0 10px 20px; line-height: 26px;">支持扩展名：<strong style="font-weight:bold;">.jpg .png .gif .zip .rar .tar .gz </strong>
-                                    单个文件不超过100M, 一次至多上传20个源文件, 封面图默认第一个图片文件
+                                    单个文件不超过200M, 一次至多上传100个源文件, 封面图默认第一个图片文件
                                 </div>
                             </div>
                         </el-upload>
@@ -76,7 +76,7 @@ export default {
             insetDirFlag: true,
             width: document.body.clientWidth,
             staticData: [],
-            limitNum: 20,
+            limitNum: 100,
             errArr: [],
             ruleForm: {
                 folderId: ''
@@ -147,7 +147,7 @@ export default {
             this.$refs[formName].validate((valid) => { });
         },
         handleBeforeUpload (file) {
-            const isLt100M = file.size / 1024 / 1024 < 100
+            const isLt200M = file.size / 1024 / 1024 < 201
             const chineseReg = /[\u4E00-\u9fff]+/g
             const isChineseName = chineseReg.test(file.name)
 
@@ -181,9 +181,9 @@ export default {
                 return false;
             }
 
-            if (!isLt100M) {
+            if (!isLt200M) {
                 this.$message({
-                    message: `${file.name} 文件超过 100M, 上传失败!`,
+                    message: `${file.name} 文件超过 200M, 上传失败!`,
                     type: 'error'
                 })
                 return false;

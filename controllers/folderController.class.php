@@ -79,7 +79,7 @@ class folderController extends Base{
         $type = strtolower($_FILES['file']['type']);
         $size = $_FILES['file']['size'];
         $info = "";
-        if(in_array($type,$accept) && $size <= 104857600){
+        if(in_array($type,$accept) && $size <= 209715200){
             if ($_FILES["file"]["error"] > 0){
                 // echo "文件上传错误";
                 $info = "Return Code: " . $_FILES["file"]["error"] . "<br />";
