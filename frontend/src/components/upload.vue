@@ -47,7 +47,7 @@
                             <div class="el-upload__text">
                                 <p>将文件拖到此处，或<em>点击上传</em></p>
                                 <div style="padding:0 10px 20px; line-height: 26px;">支持扩展名：<strong style="font-weight:bold;">.jpg .png .gif .zip .rar .tar .gz </strong>
-                                    单个文件不超过200M, 一次至多上传100个源文件, 封面图默认第一个图片文件
+                                    单个文件不超过200M, 一次至多上传200个源文件, 封面图默认第一个图片文件
                                 </div>
                             </div>
                         </el-upload>
