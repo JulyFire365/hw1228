@@ -1,14 +1,14 @@
 <template>
     <div>
-        <el-button class="del-wrap" type="primary" @click="delFn">删除选中相册</el-button>
+        <el-button v-if="permission.includes('del')" class="del-wrap" type="primary" @click="delFn">删除选中相册</el-button>
         <el-checkbox-group 
             v-model="checkedCities">
             <ul>
                 <li v-for="(item,index) in staticData" :key="index">
                     <div class="img-wrap"><img :src="item.link" alt="" @click="linkToIMg(item.id)"></div>
                     <div class="fold-name">
-                        <el-checkbox v-if="item.name_ch != '默认相册'" :label="item.id" :key="item.id">{{item.name_ch}}</el-checkbox>
-                        <div style="font-size: 13px; padding-top: 4px;" v-else>{{item.name_ch}}</div>
+                        <div v-if="item.name_ch == '默认相册' || item.name_ch == 'wh' || !permission.includes('del')" style="font-size: 13px; padding-top: 2px;" >{{item.name_ch}}</div>
+                        <el-checkbox v-else :label="item.id" :key="item.id">{{item.name_ch}}</el-checkbox>
                     </div>
                 </li>
             </ul>
@@ -16,18 +16,20 @@
     </div>
 </template>
 <script>
-import {uploadStatic,delFold} from '@/request';
+import {uploadStatic,delFold,getPermission} from '@/request';
 export default {
     name: 'imgList',
     data(){
         return {
             checkedCities: [],
             idArr: [],
-            staticData: []
+            staticData: [],
+            permission: []
         }
     },
     created(){
-        this.init()
+        this.init();
+        this.getPermission();
     },
     methods: {
         delFn(){
@@ -43,6 +45,11 @@ export default {
                 if(res.status == 200){
                     this.$message.success("删除成功");
                 }
+            })
+        },
+        getPermission(){
+            getPermission().then(res=>{
+                this.permission = res.data.permission;
             })
         },
         init(){

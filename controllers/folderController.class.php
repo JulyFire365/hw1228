@@ -47,9 +47,9 @@ class folderController extends Base{
             $type = substr(strrchr($file[0], '.'), 1);
             $type = strtolower($type);
             if(in_array($type,self::$acceptType)){
-                $link = "/img/".$folderId."/".$file[0];
+                $link = file_exists("/thumbImg/".$folderId."/".$file[0]) ? "/thumbImg/".$folderId."/".$file[0] : "/img/".$folderId."/".$file[0];
             }else{
-                $link = "/img/默认相册/test.jpg";
+                $link = "/thumbImg/默认相册/test.jpg";
             }
             $_id = $_id + 1;
             $arr = [
@@ -93,6 +93,10 @@ class folderController extends Base{
                         if(in_array($type,$packArr)){
                             unpack_file($_FILES["file"], 'img/'.$fileName.'/');
                         }
+
+                        exec('mkdir thumbImg/'.$fileName);
+                        exec('convert -resize 300x200 img/' .$fileName .'/'. $_FILES["file"]["name"] . ' thumbImg/' .$fileName .'/'. $_FILES["file"]["name"]);
+
                         $this->ajaxInfo([],$info,STATUS_SUCCESS);
                         exit;
                     }
@@ -145,7 +149,7 @@ class folderController extends Base{
                 $type = substr(strrchr($value, '.'), 1);
                 $type = strtolower($type);
                 if(in_array($type,self::$acceptType)){
-                    $data[] = '/img/'.$dataName['name_ch'].'/'.$value;
+                    $data[] = ['originImg'=>'/img/'.$dataName['name_ch'].'/'.$value ,'thumbImg'=>'/thumbImg/'.$dataName['name_ch'].'/'.$value];
                 }
             }
         }
