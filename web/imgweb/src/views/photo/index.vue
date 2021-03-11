@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="page-photo">
     <el-page-header :content="name+` (${list.length}张图片)`" @back="goBack" />
     <div class="image-box">
       <div v-for="(item,n) in list" :key="n" class="block">
@@ -47,7 +47,16 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.page-photo{
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+}
 .el-page-header{
-  margin-bottom: 15px;
+  margin-bottom: 10px;
+  background-color: #fff;
+}
+.image-box{
+  overflow: auto;
 }
 </style>
