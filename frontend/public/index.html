@@ -7,8 +7,15 @@
     <title>Document</title>
 </head>
 <body>
-    <div id="app">
-
-    </div>
+    <div id="app"></div>
+    <!-- <script>
+        if('serviceWorker' in navigator && 'fetch' in window){
+            window.addEventListener('load',() => {
+                navigator.serviceWorker.register('/service-worker.js').then(()=>{
+                    console.log('service worker regist!');
+                });
+            })
+        }
+    </script> -->
 </body>
 </html>

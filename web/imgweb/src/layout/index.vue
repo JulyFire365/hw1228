@@ -82,6 +82,7 @@ export default {
     position: relative;
     align-items: center;
     overflow: auto;
+    height: 100%;
 
     &.mobile.openSidebar {
       position: fixed;
