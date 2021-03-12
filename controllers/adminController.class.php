@@ -3,7 +3,6 @@ $curdir = dirname(__FILE__);
 include_once($curdir.'/../common/base.php');
 
 class adminController extends Base{
-    public $auth = "";
     public function login(){
         $data = json_decode(file_get_contents('php://input'),true);
         if($data){
