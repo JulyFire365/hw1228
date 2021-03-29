@@ -10,7 +10,6 @@ class MAIN{
     public static $controller;
     public static $method;
     private static $config;
-    private static $sql;
     private static function init_db(){
         DB::init(self::$config);
     }

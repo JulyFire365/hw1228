@@ -43,7 +43,7 @@
         exec("gunzip ./".$targetName.$file['name']);
         break;  
         case 'application/x-tar': //.tar
-        exec("tar -xvf ./".$targetName.$file['name'] ." -C ./".$targetNam);
+        exec("tar -xvf ./".$targetName.$file['name'] ." -C ./".$targetName);
         break;
         case 'application/octet-stream'://.rar
         exec("unrar e ./".$targetName.$file['name']);
