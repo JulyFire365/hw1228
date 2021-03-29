@@ -1,6 +1,4 @@
 <?php
-    echo "test";
-    die;
     if(!session_id()){
         session_start();
     }
