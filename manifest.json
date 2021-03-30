@@ -1,0 +1,23 @@
+{
+	"short_name": "hw1228",
+	"name": "hw1228",
+	"orientation": "portrait",
+	"start_url": "/",
+	"display": "standalone",
+	"theme_color": "#000",
+	"background_color": "#fff",
+	"icons": [
+		{
+			"src": "./sys/192.jpg",
+			"sizes": "192x192",
+			"type": "image/jpg",
+			"purpose": "any"
+		},
+		{
+			"src": "./sys/512.jpg",
+			"sizes": "512x512",
+			"type": "image/jpg",
+			"purpose": "any"
+		}
+	]
+}
