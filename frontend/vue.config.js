@@ -4,6 +4,7 @@ require('dotenv').config({
 const CompressionPlugin = require('compression-webpack-plugin')
 const hostUrl = process.env.APP_URL
 console.log(hostUrl);
+
 module.exports = {
 	devServer: {
 		proxy: hostUrl

@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "rm -rf ../public/{js,css,img} && workbox generateSW ./workbox-config.js && vue-cli-service build --no-cleannpm ",
+    "build": "rm -rf ../public/{js,css,img} && vue-cli-service build --no-cleannpm ",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
